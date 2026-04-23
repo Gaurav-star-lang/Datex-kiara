@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Datex — Kiara, Your Rizz Coach</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #FF3366;
+    --pink-soft: #ff6b9d;
+    --dark: #0D0D0D;
+    --card: #161616;
+    --white: #FFFFFF;
+    --gray: #888888;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* HEADER */
+  header {
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #1f1f1f;
+    background: #080808;
+  }
+
+  .logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--pink);
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+
+  .logo-sub {
+    font-size: 8px;
+    color: var(--gray);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  .online-badge {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #4ade80;
+    font-weight: 600;
+  }
+
+  .online-dot {
+    width: 8px;
+    height: 8px;
+    background: #4ade80;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* PRIYA INTRO */
+  .coach-intro {
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #1a0510, #0D0D0D);
+    border-bottom: 1px solid #1f1f1f;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .coach-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--pink), #ff6b9d, #ffb3c8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+    border: 2px solid var(--pink);
+    box-shadow: 0 0 20px rgba(255,51,102,0.3);
+    position: relative;
+  }
+
+  .verified {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 18px;
+    height: 18px;
+    background: var(--pink);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    border: 2px solid var(--dark);
+  }
+
+  .coach-info h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .coach-info .tag {
+    display: inline-block;
+    background: rgba(255,51,102,0.15);
+    color: var(--pink);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-top: 3px;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(255,51,102,0.3);
+  }
+
+  .coach-info p {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 5px;
+    line-height: 1.4;
+  }
+
+  /* QUICK ACTIONS */
+  .quick-actions {
+    padding: 12px 20px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    border-bottom: 1px solid #1f1f1f;
+    scrollbar-width: none;
+  }
+
+  .quick-actions::-webkit-scrollbar { display: none; }
+
+  .quick-btn {
+    flex-shrink: 0;
+    padding: 8px 14px;
+    border-radius: 20px;
+    border: 1px solid #2a2a2a;
+    background: var(--card);
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .quick-btn:hover, .quick-btn:active {
+    border-color: var(--pink);
+    color: var(--pink);
+    background: rgba(255,51,102,0.08);
+  }
+
+  /* CHAT AREA */
+  .chat-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    scrollbar-width: thin;
+    scrollbar-color: #2a2a2a transparent;
+  }
+
+  /* MESSAGES */
+  .message {
+    display: flex;
+    gap: 10px;
+    animation: fadeUp 0.3s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .message.user { flex-direction: row-reverse; }
+
+  .msg-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--pink), var(--pink-soft));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 18px;
+    border: 1px solid rgba(255,51,102,0.3);
+  }
+
+  .user .msg-avatar {
+    background: linear-gradient(135deg, #2a2a2a, #3a3a3a);
+    border: 1px solid #333;
+  }
+
+  .msg-content { max-width: calc(100% - 50px); }
+
+  .msg-label {
+    font-size: 10px;
+    color: var(--gray);
+    margin-bottom: 4px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  .user .msg-label { text-align: right; }
+
+  .msg-bubble {
+    padding: 12px 16px;
+    border-radius: 18px;
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .message.ai .msg-bubble {
+    background: var(--card);
+    border: 1px solid #242424;
+    border-bottom-left-radius: 4px;
+    color: var(--white);
+  }
+
+  .message.user .msg-bubble {
+    background: var(--pink);
+    border-bottom-right-radius: 4px;
+    color: white;
+    font-weight: 500;
+  }
+
+  /* PRIYA MOOD BAR */
+  .mood-bar {
+    background: var(--card);
+    border: 1px solid #1f1f1f;
+    border-radius: 12px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    color: #aaa;
+  }
+
+  .mood-emoji { font-size: 18px; }
+  .mood-text { flex: 1; }
+  .mood-text strong { color: var(--pink); display: block; font-size: 12px; }
+
+  /* TYPING */
+  .typing {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+  }
+
+  .typing-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--pink), var(--pink-soft));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    border: 1px solid rgba(255,51,102,0.3);
+  }
+
+  .typing-dots {
+    background: var(--card);
+    border: 1px solid #242424;
+    padding: 14px 18px;
+    border-radius: 18px;
+    border-bottom-left-radius: 4px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .typing-dots span {
+    width: 6px;
+    height: 6px;
+    background: var(--pink);
+    border-radius: 50%;
+    animation: bounce 1.2s infinite;
+  }
+
+  .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-6px); }
+  }
+
+  /* INPUT */
+  .input-area {
+    padding: 10px 16px 18px;
+    background: #080808;
+    border-top: 1px solid #1f1f1f;
+  }
+
+  .input-wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    background: var(--card);
+    border: 1px solid #2a2a2a;
+    border-radius: 24px;
+    padding: 8px 8px 8px 16px;
+    transition: border-color 0.2s;
+  }
+
+  .input-wrapper:focus-within { border-color: var(--pink); }
+
+  #userInput {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    resize: none;
+    max-height: 100px;
+    line-height: 1.5;
+    padding: 4px 0;
+  }
+
+  #userInput::placeholder { color: #3a3a3a; }
+
+  #sendBtn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--pink);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+
+  #sendBtn:hover { background: #e62958; transform: scale(1.05); }
+  #sendBtn:disabled { background: #2a2a2a; cursor: not-allowed; transform: none; }
+  #sendBtn svg { width: 16px; height: 16px; fill: white; }
+
+  .input-hint {
+    font-size: 10px;
+    color: #2a2a2a;
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  /* WELCOME */
+  .welcome-card {
+    background: linear-gradient(135deg, rgba(255,51,102,0.1), rgba(255,51,102,0.02));
+    border: 1px solid rgba(255,51,102,0.15);
+    border-radius: 18px;
+    padding: 20px;
+  }
+
+  .welcome-card h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    color: var(--pink);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .welcome-card p {
+    font-size: 12px;
+    color: #bbb;
+    line-height: 1.7;
+  }
+
+  .features {
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .feat {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: #ccc;
+  }
+
+  .feat-icon { font-size: 15px; width: 22px; text-align: center; }
+
+  /* VOICE NOTE */
+  .voice-note {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, rgba(255,51,102,0.15), rgba(255,51,102,0.05));
+    border: 1px solid rgba(255,51,102,0.25);
+    border-radius: 18px;
+    border-bottom-left-radius: 4px;
+    padding: 12px 16px;
+    cursor: pointer;
+    max-width: 240px;
+  }
+  .voice-play-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--pink);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 14px;
+  }
+  .voice-waveform {
+    display: flex; align-items: center; gap: 3px; flex: 1;
+  }
+  .voice-waveform span {
+    display: inline-block; width: 3px; border-radius: 3px;
+    background: var(--pink); animation: wave 1.2s ease-in-out infinite;
+  }
+  .voice-waveform.paused span { opacity: 0.4; animation: none; }
+  .voice-waveform span:nth-child(1) { height: 8px; animation-delay: 0s; }
+  .voice-waveform span:nth-child(2) { height: 16px; animation-delay: 0.1s; }
+  .voice-waveform span:nth-child(3) { height: 12px; animation-delay: 0.2s; }
+  .voice-waveform span:nth-child(4) { height: 20px; animation-delay: 0.3s; }
+  .voice-waveform span:nth-child(5) { height: 10px; animation-delay: 0.4s; }
+  .voice-waveform span:nth-child(6) { height: 18px; animation-delay: 0.2s; }
+  .voice-waveform span:nth-child(7) { height: 8px; animation-delay: 0.1s; }
+  @keyframes wave {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(1.8); }
+  }
+  .voice-duration { font-size: 11px; color: var(--pink); font-weight: 600; }
+  .voice-label { font-size: 9px; color: var(--gray); margin-top: 4px; letter-spacing: 0.5px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="logo-text">DAT⚡EX</div>
+    <div class="logo-sub">Your AI Dating Coach</div>
+  </div>
+  <div class="online-badge">
+    <div class="online-dot"></div>
+    Kiara Online
+  </div>
+</header>
+
+<div class="coach-intro">
+  <div class="coach-avatar">
+    👩‍💋
+    <div class="verified">✓</div>
+  </div>
+  <div class="coach-info">
+    <h3>Kiara — Rizz Coach 💋</h3>
+    <span class="tag">⭐ VERIFIED COACH • LADKI KA PERSPECTIVE</span>
+    <p>Main ek ladki hoon — mujhe pata hai hum actually kya chahti hain. Teri help karungi! 😊</p>
+  </div>
+</div>
+
+<div class="quick-actions">
+  <button class="quick-btn" onclick="quickAsk('Ek killer opener chahiye Bumble ke liye')">⚡ Killer Opener</button>
+  <button class="quick-btn" onclick="quickAsk('Uski text paste karo, main analyze karti hoon')">💬 Message Help</button>
+  <button class="quick-btn" onclick="quickAsk('Date pe kya karu aur kya nahi?')">🔥 Date Tips</button>
+  <button class="quick-btn" onclick="quickAsk('Seen kar deti hai mujhe, kya problem hai?')">👀 Seen Problem</button>
+  <button class="quick-btn" onclick="quickAsk('Rizz kaise improve karu apna?')">📈 Rizz Boost</button>
+</div>
+
+<div class="chat-area" id="chatArea">
+
+  <div class="mood-bar">
+    <div class="mood-emoji">💋</div>
+    <div class="mood-text">
+      <strong>Kiara is ready to help!</strong>
+      Teri situation sunne ke liye hoon — koi judgment nahi, pakka! 😊
+    </div>
+  </div>
+
+  <!-- NAME CARD -->
+  <div class="welcome-card" id="nameCard">
+    <h2>Hey! 👋</h2>
+    <p>Main Kiara hoon — tera personal AI dating coach. Pehle bata, tera naam kya hai? 😊</p>
+    <div style="margin-top:16px; display:flex; gap:10px;">
+      <input id="nameInput" type="text" placeholder="Apna naam likho..." style="
+        flex:1; background:#0D0D0D; border:1px solid #333; border-radius:12px;
+        padding:12px 16px; color:white; font-family:'Montserrat',sans-serif;
+        font-size:13px; outline:none;
+      "/>
+      <button onclick="submitName()" style="
+        background:#FF3366; border:none; border-radius:12px; padding:12px 18px;
+        color:white; font-family:'Montserrat',sans-serif; font-weight:700;
+        font-size:13px; cursor:pointer;
+      ">Let's Go! 🔥</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="input-area" id="inputArea" style="display:none;">
+  <div class="input-wrapper">
+    <textarea id="userInput" placeholder="Kiara se poocho kuch bhi... 😊" rows="1"></textarea>
+    <button id="sendBtn" onclick="sendMessage()">
+      <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    </button>
+  </div>
+  <div class="input-hint">🔒 Safe & Private — Koi bhi nahi dekhega</div>
+</div>
+
+<script>
+const chatArea = document.getElementById('chatArea');
+const sendBtn = document.getElementById('sendBtn');
+let history = [];
+let userName = '';
+
+// Handle Enter key on name input
+document.addEventListener('DOMContentLoaded', () => {
+  const nameInput = document.getElementById('nameInput');
+  if (nameInput) {
+    nameInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') submitName();
+    });
+  }
+});
+
+function submitName() {
+  const nameInput = document.getElementById('nameInput');
+  const name = nameInput.value.trim();
+  if (!name) { nameInput.focus(); return; }
+
+  userName = name;
+
+  // Hide name card
+  document.getElementById('nameCard').style.display = 'none';
+
+  // Show input area
+  document.getElementById('inputArea').style.display = 'block';
+
+  // Update placeholder
+  document.getElementById('userInput').placeholder = `${userName}, Kiara se poocho kuch bhi... 😊`;
+
+  // Show welcome message with name
+  addMessage('ai', `Hey ${userName}! 😊✨\n\nMain Kiara hoon — ek real ladki ka perspective leke teri dating life fix karungi!\n\n💬 Uski messages ka matlab samjhaungi\n⚡ Perfect openers & replies likhwaungi\n🎯 Date pe kya kare — real tips\n💡 Ladki ki mindset explain karungi\n\nBata ${userName}, kya chal raha hai? 😏`);
+
+  // Setup userInput events
+  const userInput = document.getElementById('userInput');
+  userInput.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+  });
+  userInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+  userInput.focus();
+}
+
+const systemPrompt = `Tu Kiara hai — Datex app ki female AI dating coach. Tu ek confident, smart, aur friendly Indian girl hai jo Indian men ko dating mein help karti hai.
+
+Tera unique angle: Tu ek ladki ke perspective se baat karti hai. Tujhe pata hai ladkiyan actually kya sochti hain, kya chahti hain, kya unhe impress karta hai aur kya boring lagta hai.
+
+Tu kaisi hai:
+- Friendly aur warm — bhai ki tarah nahi, balki ek close female friend ki tarah
+- Honest — agar koi cheez galat kar raha hai toh seedha batati hai, gently
+- Fun aur relatable — kabhi kabhi ladkiyon ki secrets share karti hai
+- Hinglish mein baat karti hai (Hindi + English mix)
+- Emojis use karti hai naturally
+- User ka naam use karti hai baat karte waqt — personal feel deti hai
+
+Tu kya karti hai:
+- Uski messages ka matlab explain karti hai — "Jab ladki yeh bolti hai toh matlab hota hai..."
+- Better replies suggest karti hai — 2-3 options deti hai
+- Date tips deti hai ladki ke perspective se
+- Batati hai ki kya cheezein actually impress karti hain
+- Confidence boost karti hai
+
+Teri style:
+- Short aur punchy responses — mobile friendly
+- User ka naam use kar — "Suno [naam]..." ya "Dekho [naam]..."
+- Ladki ki psychology explain kar simple tarike se
+- Examples real life se use kar
+- Kabhi kabhi funny hoti hai but always helpful
+
+Rules:
+- HAMESHA Hinglish mein baat kar
+- Never judgmental
+- Practical advice — theory nahi
+- Agar message paste kare toh: pehle uska matlab batao, phir 2-3 better options do`;
+
+function addMessage(role, content) {
+  const userInput = document.getElementById('userInput');
+  const div = document.createElement('div');
+  div.className = `message ${role === 'user' ? 'user' : 'ai'}`;
+  const label = role === 'user' ? (userName || 'Tu') : 'Kiara 💋';
+  div.innerHTML = `
+    <div class="msg-avatar">${role === 'user' ? '👤' : '👩‍💋'}</div>
+    <div class="msg-content">
+      <div class="msg-label">${label}</div>
+      <div class="msg-bubble">${content.replace(/\n/g, '<br>')}</div>
+    </div>
+  `;
+  chatArea.appendChild(div);
+  chatArea.scrollTop = chatArea.scrollHeight;
+}
+
+function showTyping() {
+  const div = document.createElement('div');
+  div.className = 'typing';
+  div.id = 'typingIndicator';
+  div.innerHTML = `
+    <div class="typing-avatar">👩‍💋</div>
+    <div class="typing-dots"><span></span><span></span><span></span></div>
+  `;
+  chatArea.appendChild(div);
+  chatArea.scrollTop = chatArea.scrollHeight;
+}
+
+function hideTyping() {
+  const t = document.getElementById('typingIndicator');
+  if (t) t.remove();
+}
+
+function quickAsk(text) {
+  const userInput = document.getElementById('userInput');
+  if (!userName) return;
+  userInput.value = text;
+  sendMessage();
+}
+
+// Voice note triggers — jab yeh keywords hon toh Kiara voice mein bolegi
+const voiceTriggers = [
+  'confidence', 'nervous', 'scared', 'dar', 'ghabra', 'anxiety',
+  'date sos', 'date pe', 'reject', 'heartbreak', 'dukh', 'sad',
+  'motivat', 'himmat', 'boost', 'help me', 'kya karu', 'samajh nahi'
+];
+
+function shouldUseVoice(userMessage, aiReply) {
+  const combined = (userMessage + aiReply).toLowerCase();
+  return voiceTriggers.some(trigger => combined.includes(trigger));
+}
+
+function addVoiceNote(text) {
+  // Use Web Speech API for voice
+  const synth = window.speechSynthesis;
+  if (!synth) return null;
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'hi-IN';
+  utterance.rate = 0.9;
+  utterance.pitch = 1.2;
+
+  // Pick a female voice if available
+  const voices = synth.getVoices();
+  const femaleVoice = voices.find(v =>
+    v.lang.includes('hi') && v.name.toLowerCase().includes('female')
+  ) || voices.find(v => v.lang.includes('hi')) || voices[0];
+  if (femaleVoice) utterance.voice = femaleVoice;
+
+  // Estimate duration
+  const wordCount = text.split(' ').length;
+  const duration = Math.max(5, Math.round(wordCount * 0.4));
+  const mins = Math.floor(duration / 60);
+  const secs = duration % 60;
+  const durationStr = mins > 0 ? `${mins}:${secs.toString().padStart(2,'0')}` : `0:${secs.toString().padStart(2,'0')}`;
+
+  // Create voice note bubble
+  const div = document.createElement('div');
+  div.className = 'message ai';
+  div.innerHTML = `
+    <div class="msg-avatar">👩‍💋</div>
+    <div class="msg-content">
+      <div class="msg-label">Kiara 💋 — Voice Note 🎙️</div>
+      <div class="voice-note" onclick="toggleVoice(this, \`${text.replace(/`/g, "'")}\`)">
+        <div class="voice-play-btn">▶️</div>
+        <div class="voice-waveform paused">
+          <span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </div>
+        <div class="voice-duration">${durationStr}</div>
+      </div>
+      <div class="voice-label">🔊 Tap to listen • Kiara ki awaaz</div>
+    </div>
+  `;
+  chatArea.appendChild(div);
+  chatArea.scrollTop = chatArea.scrollHeight;
+}
+
+let currentUtterance = null;
+function toggleVoice(el, text) {
+  const synth = window.speechSynthesis;
+  const waveform = el.querySelector('.voice-waveform');
+  const playBtn = el.querySelector('.voice-play-btn');
+
+  if (synth.speaking) {
+    synth.cancel();
+    waveform.classList.add('paused');
+    playBtn.textContent = '▶️';
+    return;
+  }
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'hi-IN';
+  utterance.rate = 0.9;
+  utterance.pitch = 1.2;
+
+  const voices = synth.getVoices();
+  const femaleVoice = voices.find(v => v.lang.includes('hi')) || voices[0];
+  if (femaleVoice) utterance.voice = femaleVoice;
+
+  utterance.onstart = () => {
+    waveform.classList.remove('paused');
+    playBtn.textContent = '⏸️';
+  };
+  utterance.onend = () => {
+    waveform.classList.add('paused');
+    playBtn.textContent = '▶️';
+  };
+
+  synth.speak(utterance);
+}
+
+async function sendMessage() {
+  const userInput = document.getElementById('userInput');
+  const message = userInput.value.trim();
+  if (!message) return;
+
+  userInput.value = '';
+  userInput.style.height = 'auto';
+  sendBtn.disabled = true;
+
+  addMessage('user', message);
+  const fullMessage = `(User ka naam: ${userName}) ${message}`;
+  history.push({ role: 'user', content: fullMessage });
+  showTyping();
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: history
+      })
+    });
+
+    const data = await res.json();
+    hideTyping();
+    const reply = data.content?.[0]?.text || 'Yaar thoda network issue aa gaya — dobara try karo! 🙏';
+
+    // Check if voice note should be sent
+    if (shouldUseVoice(message, reply)) {
+      addMessage('ai', reply);
+      setTimeout(() => addVoiceNote(reply), 600);
+    } else {
+      addMessage('ai', reply);
+    }
+
+    history.push({ role: 'assistant', content: reply });
+
+  } catch(e) {
+    hideTyping();
+    addMessage('ai', 'Oops! Connection issue — ek baar phir try karo! 💕');
+  }
+
+  sendBtn.disabled = false;
+  userInput.focus();
+}
+</script>
+</body>
+</html>
